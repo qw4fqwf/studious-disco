@@ -7,6 +7,7 @@ import Typewriter from "../Typewriter";
 
 const Hero = () => {
   // Fallbacks to prevent 'undefined' showing on the site
+  console.log('DEBUG config.hero:', config.hero);
   const heroName = config.hero.name || "Manav Mahawar";
   const heroP0 = config.hero.p?.[0] || "I’m a multidisciplinary creative specializing in design, writing, and digital media.";
   const heroP1 = config.hero.p?.[1] || "I bring ideas to life through visuals, words, and content that connects.";
