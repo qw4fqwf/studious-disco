@@ -6,6 +6,11 @@ import { config } from "../../constants/config";
 import Typewriter from "../Typewriter";
 
 const Hero = () => {
+  // Fallbacks to prevent 'undefined' showing on the site
+  const heroName = config.hero.name || "Manav Mahawar";
+  const heroP0 = config.hero.p?.[0] || "I’m a multidisciplinary creative specializing in design, writing, and digital media.";
+  const heroP1 = config.hero.p?.[1] || "I bring ideas to life through visuals, words, and content that connects.";
+
   return (
     <section className={`relative mx-auto h-screen w-full`}>
       <div
@@ -19,13 +24,13 @@ const Hero = () => {
         <div>
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I'm <span className="text-[#915EFF]">
-              <Typewriter text={config.hero.name} speed={70} />
+              <Typewriter text={heroName} speed={70} />
             </span>
           </h1>
           <p className={`${styles.heroSubText} text-white-100 mt-2`}>
-            <Typewriter text={config.hero.p[0]} speed={30} />
+            <Typewriter text={heroP0} speed={30} />
             <br className="hidden sm:block" />
-            <Typewriter text={config.hero.p[1]} speed={30} />
+            <Typewriter text={heroP1} speed={30} />
           </p>
         </div>
       </div>
