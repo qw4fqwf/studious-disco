@@ -8,15 +8,21 @@ type CarouselProps<T> = {
 
 export function Carousel<T>({ items, renderItem, autoRotateMs = 5000 }: CarouselProps<T>) {
   const [active, setActive] = useState(0);
-  const timeout = useRef<NodeJS.Timeout | null>(null);
+  // Use number for browser setTimeout
+  const timeout = useRef<number | null>(null);
 
   useEffect(() => {
     if (autoRotateMs > 0) {
-      timeout.current = setTimeout(() => {
+      timeout.current = window.setTimeout(() => {
         setActive((a) => (a + 1) % items.length);
       }, autoRotateMs);
-      return () => timeout.current && clearTimeout(timeout.current);
+      return () => {
+        if (timeout.current !== null) {
+          clearTimeout(timeout.current);
+        }
+      };
     }
+    return undefined;
   }, [active, autoRotateMs, items.length]);
 
   const go = (dir: number) => {
