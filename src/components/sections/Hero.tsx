@@ -1,14 +1,13 @@
-
 import { motion } from "framer-motion";
+
 import { styles } from "../../constants/styles";
 import { ComputersCanvas } from "../canvas";
 import { config } from "../../constants/config";
-import Typewriter from "../Typewriter";
 
 const Hero = () => {
   // Robust fallbacks for hero section
   const heroName = typeof config.hero?.name === "string" && config.hero.name.trim() !== "" ? config.hero.name : "Manav Mahawar";
-  const heroP0 = Array.isArray(config.hero?.p) && typeof config.hero.p[0] === "string" && config.hero.p[0].trim() !== "" ? config.hero.p[0] : "I’m a multidisciplinary creative specializing in design, writing, and digital media.";
+  const heroP0 = Array.isArray(config.hero?.p) && typeof config.hero.p[0] === "string" && config.hero.p[0].trim() !== "" ? config.hero.p[0] : "I'm a multidisciplinary creative specializing in design, writing, and digital media.";
   const heroP1 = Array.isArray(config.hero?.p) && typeof config.hero.p[1] === "string" && config.hero.p[1].trim() !== "" ? config.hero.p[1] : "I bring ideas to life through visuals, words, and content that connects.";
 
   return (
@@ -24,13 +23,13 @@ const Hero = () => {
         <div>
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I'm <span className="text-[#915EFF]">
-              <Typewriter text={heroName} speed={70} />
+              {heroName}
             </span>
           </h1>
           <p className={`${styles.heroSubText} text-white-100 mt-2`}>
-            <Typewriter text={heroP0} speed={30} />
+            {heroP0}
             <br className="hidden sm:block" />
-            <Typewriter text={heroP1} speed={30} />
+            {heroP1}
           </p>
         </div>
       </div>
