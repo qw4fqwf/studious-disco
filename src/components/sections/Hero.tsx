@@ -1,16 +1,15 @@
-import { motion } from "framer-motion";
 
+import { motion } from "framer-motion";
 import { styles } from "../../constants/styles";
 import { ComputersCanvas } from "../canvas";
 import { config } from "../../constants/config";
 import Typewriter from "../Typewriter";
 
 const Hero = () => {
-  // Fallbacks to prevent 'undefined' showing on the site
-  console.log('DEBUG config.hero:', config.hero);
-  const heroName = config.hero.name || "Manav Mahawar";
-  const heroP0 = config.hero.p?.[0] || "I’m a multidisciplinary creative specializing in design, writing, and digital media.";
-  const heroP1 = config.hero.p?.[1] || "I bring ideas to life through visuals, words, and content that connects.";
+  // Robust fallbacks for hero section
+  const heroName = typeof config.hero?.name === "string" && config.hero.name.trim() !== "" ? config.hero.name : "Manav Mahawar";
+  const heroP0 = Array.isArray(config.hero?.p) && typeof config.hero.p[0] === "string" && config.hero.p[0].trim() !== "" ? config.hero.p[0] : "I’m a multidisciplinary creative specializing in design, writing, and digital media.";
+  const heroP1 = Array.isArray(config.hero?.p) && typeof config.hero.p[1] === "string" && config.hero.p[1].trim() !== "" ? config.hero.p[1] : "I bring ideas to life through visuals, words, and content that connects.";
 
   return (
     <section className={`relative mx-auto h-screen w-full`}>
