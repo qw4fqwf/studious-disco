@@ -5,85 +5,135 @@ interface MobileDetectionProps {
 }
 
 const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
-  const [deviceType, setDeviceType] = useState<'desktop' | 'mobile' | 'mobileDesktopMode'>('desktop');
+  const [deviceState, setDeviceState] = useState<'desktop' | 'mobile' | 'mobileDesktopMode'>('mobile');
 
   useEffect(() => {
-    const checkDevice = () => {
-      // Basic mobile check first
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
+    let lastCheck = Date.now();
+    
+    const isMobileDevice = () => {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
         navigator.userAgent
       );
+    };
 
-      if (!isMobileDevice) {
-        setDeviceType('desktop');
+    const isDesktopMode = () => {
+      // Check if viewport is manipulated
+      const screenWidth = window.screen.width;
+      const viewportWidth = window.innerWidth;
+      const ratio = viewportWidth / screenWidth;
+      
+      return ratio > 1.2; // If viewport is 20% larger than screen width, it's desktop mode
+    };
+
+    const forceViewportReset = () => {
+      const viewport = document.querySelector('meta[name=viewport]');
+      if (viewport) {
+        viewport.remove();
+      }
+      const newViewport = document.createElement('meta');
+      newViewport.name = 'viewport';
+      newViewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+      document.getElementsByTagName('head')[0].appendChild(newViewport);
+    };
+
+    const checkDevice = () => {
+      if (Date.now() - lastCheck < 100) return; // Prevent too frequent checks
+      lastCheck = Date.now();
+
+      const mobile = isMobileDevice();
+      
+      if (!mobile) {
+        setDeviceState('desktop');
         return;
       }
 
-      // If it's mobile, check if they're trying to use desktop mode
-      // Desktop mode typically has a viewport width much larger than the actual screen width
-      const actualWidth = window.screen.width;
-      const viewportWidth = window.innerWidth;
-      
-      // If viewport is significantly larger than actual screen, they're probably in desktop mode
-      const isDesktopMode = viewportWidth > (actualWidth + 100); // Adding buffer for slight variations
-
-      setDeviceType(isDesktopMode ? 'mobileDesktopMode' : 'mobile');
+      if (isDesktopMode()) {
+        setDeviceState('mobileDesktopMode');
+        forceViewportReset(); // Force mobile viewport
+      } else {
+        setDeviceState('mobile');
+      }
     };
 
-    // Run the check immediately
+    // Initial check
     checkDevice();
 
-    // Check on resize and orientation change
+    // Add viewport meta to prevent scaling
+    forceViewportReset();
+
+    // Check on various events
     window.addEventListener('resize', checkDevice);
     window.addEventListener('orientationchange', checkDevice);
+    
+    // Continuous checking
+    const interval = setInterval(checkDevice, 500);
 
     return () => {
       window.removeEventListener('resize', checkDevice);
       window.removeEventListener('orientationchange', checkDevice);
+      clearInterval(interval);
     };
   }, []);
 
-  if (deviceType === 'mobileDesktopMode') {
+  const blockingStyle: React.CSSProperties = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 99999,
+    background: '#030014',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px'
+  };
+
+  if (deviceState === 'mobileDesktopMode') {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary">
+      <div style={blockingStyle}>
         <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-lg">
-          <h2 className="mb-4 text-2xl font-bold text-white">Nice Try! 😎</h2>
+          <h2 className="mb-4 text-2xl font-bold text-white">Ah, Sneaky! 🕵️‍♂️</h2>
           <p className="mb-3 text-lg text-white">
-            Desktop mode won't work here!
-            <br />
-            We need real desktop power for this experience.
+            Desktop mode detected! But that won't work here...
           </p>
-          <div className="mt-4 space-y-2 text-white opacity-90">
-            <p className="font-semibold">Why desktop mode won't work:</p>
+          <div className="mt-4 space-y-2 text-white">
+            <p className="font-semibold">Here's why:</p>
             <ul className="list-inside list-disc">
-              <li>3D models need serious processing power 🚀</li>
-              <li>Mobile GPU isn't enough, even in desktop mode 💻</li>
-              <li>We want you to have the best experience! ✨</li>
+              <li>Our 3D models need real desktop power 💪</li>
+              <li>Desktop mode is just pretending 🎭</li>
+              <li>We want you to have the full experience! ✨</li>
             </ul>
           </div>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-6 rounded bg-white px-4 py-2 text-[#915EFF] transition hover:bg-opacity-90"
+          >
+            Back to Mobile View
+          </button>
         </div>
       </div>
     );
   }
 
-  if (deviceType === 'mobile') {
+  if (deviceState === 'mobile') {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-primary">
+      <div style={blockingStyle}>
         <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-lg">
           <h2 className="mb-4 text-2xl font-bold text-white">Welcome! 👋</h2>
           <p className="mb-3 text-lg text-white">
-            This portfolio needs a desktop or laptop computer to shine!
+            This portfolio is designed for desktop viewing.
           </p>
-          <div className="mt-4 space-y-2 text-white opacity-90">
-            <p className="font-semibold">What you'll get on desktop:</p>
+          <div className="mt-4 space-y-2 text-white">
+            <p className="font-semibold">On desktop you'll experience:</p>
             <ul className="list-inside list-disc">
-              <li>Stunning 3D animations ✨</li>
-              <li>Smooth interactive experiences 🎮</li>
-              <li>High-quality visual effects 🎨</li>
+              <li>Amazing 3D animations ✨</li>
+              <li>Interactive elements 🎮</li>
+              <li>High-performance visuals 🎨</li>
             </ul>
           </div>
-          <p className="mt-6 text-sm italic text-white opacity-80">
-            Please visit again from your computer!
+          <p className="mt-6 text-sm text-white opacity-80">
+            Please visit from your desktop or laptop computer!
           </p>
         </div>
       </div>
