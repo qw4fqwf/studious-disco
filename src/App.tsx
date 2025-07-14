@@ -9,7 +9,6 @@ import {
   Navbar,
   Tech,
   Works,
-  Connect,
   StarsCanvas,
 } from "./components";
 import { useEffect } from "react";
@@ -21,6 +20,7 @@ import CustomCursor from "./components/CustomCursor";
 import ThemeToggle from "./components/ThemeToggle";
 import AccentColorPicker from "./components/AccentColorPicker";
 import MobileDetection from "./components/MobileDetection";
+import SmoothScroll from "./components/SmoothScroll";
 
 const App = () => {
   const [isDark, setIsDark] = useState(true);
@@ -54,27 +54,28 @@ const App = () => {
   return (
     <BrowserRouter>
       <MobileDetection>
-        <div className="bg-primary relative z-0">
-          <AnimatedBackground />
-          <CustomCursor />
-          <ThemeToggle onToggle={handleThemeToggle} isDark={isDark} />
-          <AccentColorPicker />
-          <EasterEggConfetti show={egg} />
-          <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
-            <Navbar />
-            <Hero />
+        <SmoothScroll>
+          <div className="relative z-0 bg-primary">
+            <AnimatedBackground />
+            <CustomCursor />
+            <ThemeToggle onToggle={handleThemeToggle} isDark={isDark} />
+            <AccentColorPicker />
+            <EasterEggConfetti show={egg} />
+            <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
+              <Navbar />
+              <Hero />
+            </div>
+            <About />
+            <Experience />
+            <Tech />
+            <Works />
+            <Feedbacks />
+            <div className="relative z-0">
+              <Contact />
+              <StarsCanvas />
+            </div>
           </div>
-          <About />
-          <Experience />
-          <Tech />
-          <Works />
-          <Connect />
-          <Feedbacks />
-          <div className="relative z-0">
-            <Contact />
-            <StarsCanvas />
-          </div>
-        </div>
+        </SmoothScroll>
       </MobileDetection>
     </BrowserRouter>
   );
