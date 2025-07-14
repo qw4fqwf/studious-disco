@@ -11,18 +11,38 @@ const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
     let lastCheck = Date.now();
     
     const isMobileDevice = () => {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
-        navigator.userAgent
-      );
+      // Enhanced mobile detection
+      const userAgent = navigator.userAgent.toLowerCase();
+      const mobileKeywords = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i;
+      
+      // Check user agent
+      const userAgentMobile = mobileKeywords.test(userAgent);
+      
+      // Check screen size (typical mobile/tablet sizes)
+      const screenWidth = window.screen.width;
+      const isMobileSize = screenWidth <= 768;
+      
+      // Check for touch capability
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      // Consider it mobile if either user agent says so OR it has mobile characteristics
+      return userAgentMobile || (isMobileSize && hasTouch);
     };
 
     const isDesktopMode = () => {
-      // Check if viewport is manipulated
+      // More sophisticated check for mobile devices pretending to be desktop
       const screenWidth = window.screen.width;
       const viewportWidth = window.innerWidth;
       const ratio = viewportWidth / screenWidth;
       
-      return ratio > 1.2; // If viewport is 20% larger than screen width, it's desktop mode
+      // Check for common mobile screen sizes even in desktop mode
+      const isMobileScreenSize = screenWidth <= 768 || window.screen.height <= 1024;
+      
+      // Check for touch capability (most mobiles have touch)
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      // If it's a mobile screen size with touch capability, it's likely mobile in desktop mode
+      return isMobileScreenSize && hasTouch && ratio > 1.1;
     };
 
     const forceViewportReset = () => {
@@ -41,18 +61,30 @@ const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
       lastCheck = Date.now();
 
       const mobile = isMobileDevice();
+      const screenWidth = window.screen.width;
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
       
-      if (!mobile) {
+      // If it's clearly a desktop (large screen, no touch, not mobile user agent)
+      if (!mobile && screenWidth > 1024 && !hasTouch) {
         setDeviceState('desktop');
         return;
       }
-
-      if (isDesktopMode()) {
+      
+      // If it's mobile but trying to use desktop mode
+      if (mobile && isDesktopMode()) {
         setDeviceState('mobileDesktopMode');
         forceViewportReset(); // Force mobile viewport
-      } else {
-        setDeviceState('mobile');
+        return;
       }
+      
+      // If it's mobile in normal mode
+      if (mobile) {
+        setDeviceState('mobile');
+        return;
+      }
+      
+      // Default to desktop for everything else (tablets in landscape, etc.)
+      setDeviceState('desktop');
     };
 
     // Initial check
