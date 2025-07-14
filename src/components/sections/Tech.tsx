@@ -25,18 +25,18 @@ const Tech = () => {
 
   return (
     <>
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-4 sm:mb-6 px-2 sm:px-0">
         <button
-          className="px-4 py-2 rounded-lg font-bold border-2"
+          className="px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-bold border-2 text-sm sm:text-base"
           style={{ borderColor: accent, color: accent }}
           onClick={handleShuffle}
         >
           Shuffle
         </button>
       </div>
-      <div className="flex flex-row flex-wrap justify-center gap-10">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-10 px-2 sm:px-0">
         {shuffled.map((technology) => (
-          <div className="h-28 w-28" key={technology.name}>
+          <div className="h-20 w-20 sm:h-28 sm:w-28" key={technology.name}>
             <BallCanvas icon={technology.icon} accent={accent} />
           </div>
         ))}

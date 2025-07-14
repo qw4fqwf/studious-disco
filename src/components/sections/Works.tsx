@@ -59,12 +59,12 @@ const ProjectCard: React.FC<{ index: number } & TProject> = ({
         glareColor="#aaa6c3"
       >
         <div
-          className="bg-tertiary w-full rounded-2xl p-5 sm:w-[300px] border"
+          className="bg-tertiary w-full rounded-2xl p-3 sm:p-5 sm:w-[300px] border"
           style={{ borderColor: 'var(--accent)', borderWidth: 2 }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <div className="relative h-[230px] w-full">
+          <div className="relative h-[160px] xs:h-[200px] sm:h-[230px] w-full">
             <AnimatePresence mode="wait">
               <m.img
                 key={displayImage}
@@ -77,10 +77,10 @@ const ProjectCard: React.FC<{ index: number } & TProject> = ({
                 transition={{ duration: 0.4 }}
               />
             </AnimatePresence>
-            <div className="card-img_hover absolute inset-0 m-3 flex justify-end">
+            <div className="card-img_hover absolute inset-0 m-2 sm:m-3 flex justify-end">
               <div
                 onClick={() => window.open(sourceCodeLink, "_blank")}
-                className="black-gradient flex h-10 w-10 cursor-pointer items-center justify-center rounded-full"
+                className="black-gradient flex h-8 w-8 sm:h-10 sm:w-10 cursor-pointer items-center justify-center rounded-full"
               >
                 <img
                   src={github}
@@ -90,13 +90,13 @@ const ProjectCard: React.FC<{ index: number } & TProject> = ({
               </div>
             </div>
           </div>
-          <div className="mt-5">
-            <h3 className="text-[24px] font-bold text-white">{name}</h3>
-            <p className="text-secondary mt-2 text-[14px]">{description}</p>
+          <div className="mt-3 sm:mt-5">
+            <h3 className="text-[18px] sm:text-[24px] font-bold text-white">{name}</h3>
+            <p className="text-secondary mt-2 text-[13px] sm:text-[14px]">{description}</p>
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1 sm:gap-2">
             {tags.map((tag: { name: string; color: string }) => (
-              <p key={tag.name} className={`text-[14px] ${tag.color}`}>
+              <p key={tag.name} className={`text-[12px] sm:text-[14px] ${tag.color}`}>
                 #{tag.name}
               </p>
             ))}
@@ -113,7 +113,7 @@ const Works = () => {
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="text-secondary mt-3 max-w-3xl text-[17px] leading-[30px]"
+        className="text-secondary mt-3 max-w-full sm:max-w-3xl text-[15px] sm:text-[17px] leading-[26px] sm:leading-[30px] px-2 sm:px-0"
       >
         {config.sections.works.content}
       </motion.p>

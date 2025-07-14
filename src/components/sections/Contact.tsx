@@ -67,11 +67,11 @@ const Contact = () => {
 
   return (
     <div
-      className={`flex flex-col-reverse gap-10 overflow-hidden xl:mt-12 xl:flex-row`}
+      className={`flex flex-col-reverse gap-6 sm:gap-10 overflow-hidden xl:mt-12 xl:flex-row px-2 sm:px-0`}
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="bg-black-100 flex-[0.75] rounded-2xl p-8"
+        className="bg-black-100 flex-[0.75] rounded-2xl p-4 sm:p-8"
       >
         <Header useMotion={false} {...config.contact} />
 
@@ -79,7 +79,7 @@ const Contact = () => {
           // @ts-expect-error
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mt-12 flex flex-col gap-8"
+          className="mt-8 sm:mt-12 flex flex-col gap-6 sm:gap-8"
         >
           {Object.keys(config.contact.form).map((input) => {
             const { span, placeholder } =
@@ -88,14 +88,14 @@ const Contact = () => {
 
             return (
               <label key={input} className="flex flex-col">
-                <span className="mb-4 font-medium text-white">{span}</span>
+                <span className="mb-2 sm:mb-4 font-medium text-white text-sm sm:text-base">{span}</span>
                 <Component
                   type={input === "email" ? "email" : "text"}
                   name={input}
                   value={form[`${input}`]}
                   onChange={handleChange}
                   placeholder={placeholder}
-                  className="bg-tertiary placeholder:text-secondary rounded-lg border-none px-6 py-4 font-medium text-white outline-none"
+                  className="bg-tertiary placeholder:text-secondary rounded-lg border-none px-4 py-3 sm:px-6 sm:py-4 font-medium text-white outline-none text-sm sm:text-base"
                   {...(input === "message" && { rows: 7 })}
                 />
               </label>
@@ -103,7 +103,7 @@ const Contact = () => {
           })}
           <button
             type="submit"
-            className="bg-tertiary shadow-primary w-fit rounded-xl px-8 py-3 font-bold text-white shadow-md outline-none"
+            className="bg-tertiary shadow-primary w-fit rounded-xl px-6 py-2 sm:px-8 sm:py-3 font-bold text-white shadow-md outline-none text-sm sm:text-base"
           >
             {loading ? "Sending..." : "Send"}
           </button>
@@ -112,7 +112,7 @@ const Contact = () => {
 
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
-        className="h-[350px] md:h-[550px] xl:h-auto xl:flex-1"
+        className="h-[220px] xs:h-[300px] md:h-[550px] xl:h-auto xl:flex-1"
       >
         <EarthCanvas />
       </motion.div>
