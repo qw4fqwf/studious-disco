@@ -56,7 +56,13 @@ const ComputersCanvas = () => {
   return (
     <>
       {isMobile ? (
-        <></>
+        <div className="flex h-[60vh] w-full items-center justify-center px-8 text-center">
+          <p className="text-lg text-white">
+            For the best experience, please view this site on a desktop device.
+            <br />
+            The 3D model is optimized for desktop viewing.
+          </p>
+        </div>
       ) : (
         <Canvas
           frameloop="demand"

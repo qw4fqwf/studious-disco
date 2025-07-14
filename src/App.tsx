@@ -20,6 +20,7 @@ import AnimatedBackground from "./components/AnimatedBackground";
 import CustomCursor from "./components/CustomCursor";
 import ThemeToggle from "./components/ThemeToggle";
 import AccentColorPicker from "./components/AccentColorPicker";
+import MobileDetection from "./components/MobileDetection";
 
 const App = () => {
   const [isDark, setIsDark] = useState(true);
@@ -52,27 +53,29 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="bg-primary relative z-0">
-        <AnimatedBackground />
-        <CustomCursor />
-        <ThemeToggle onToggle={handleThemeToggle} isDark={isDark} />
-        <AccentColorPicker />
-        <EasterEggConfetti show={egg} />
-        <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
-          <Navbar />
-          <Hero />
+      <MobileDetection>
+        <div className="bg-primary relative z-0">
+          <AnimatedBackground />
+          <CustomCursor />
+          <ThemeToggle onToggle={handleThemeToggle} isDark={isDark} />
+          <AccentColorPicker />
+          <EasterEggConfetti show={egg} />
+          <div className="bg-hero-pattern bg-cover bg-center bg-no-repeat">
+            <Navbar />
+            <Hero />
+          </div>
+          <About />
+          <Experience />
+          <Tech />
+          <Works />
+          <Connect />
+          <Feedbacks />
+          <div className="relative z-0">
+            <Contact />
+            <StarsCanvas />
+          </div>
         </div>
-        <About />
-        <Experience />
-        <Tech />
-        <Works />
-        <Connect />
-        <Feedbacks />
-        <div className="relative z-0">
-          <Contact />
-          <StarsCanvas />
-        </div>
-      </div>
+      </MobileDetection>
     </BrowserRouter>
   );
 };
