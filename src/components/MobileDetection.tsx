@@ -93,23 +93,27 @@ const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
     return (
       <div style={blockingStyle}>
         <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-lg">
-          <h2 className="mb-4 text-2xl font-bold text-white">Ah, Sneaky! 🕵️‍♂️</h2>
+          <h2 className="mb-4 text-2xl font-bold text-white">Nice Try, Smarty Pants! 🤓</h2>
           <p className="mb-3 text-lg text-white">
-            Desktop mode detected! But that won't work here...
+            Don't try to be smart! I can see you're on mobile pretending to be a desktop. 😏
           </p>
           <div className="mt-4 space-y-2 text-white">
-            <p className="font-semibold">Here's why:</p>
+            <p className="font-semibold">Listen here, genius:</p>
             <ul className="list-inside list-disc">
-              <li>Our 3D models need real desktop power 💪</li>
-              <li>Desktop mode is just pretending 🎭</li>
-              <li>We want you to have the full experience! ✨</li>
+              <li>Your phone isn't magically a computer �➡️💻</li>
+              <li>Desktop mode is just fancy makeup 💄</li>
+              <li>Stop cheating and get a real desktop! 🖥️</li>
+              <li>We're not falling for your tricks! 🎪</li>
             </ul>
           </div>
+          <p className="mt-4 text-white font-bold">
+            Please view this on your ACTUAL desktop or laptop! 
+          </p>
           <button 
             onClick={() => window.location.reload()}
-            className="mt-6 rounded bg-white px-4 py-2 text-[#915EFF] transition hover:bg-opacity-90"
+            className="mt-6 rounded bg-white px-4 py-2 text-[#915EFF] transition hover:bg-opacity-90 font-semibold"
           >
-            Back to Mobile View
+            Fine, Back to Mobile View 🙄
           </button>
         </div>
       </div>
