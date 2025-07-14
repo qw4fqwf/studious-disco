@@ -5,17 +5,38 @@ interface MobileDetectionProps {
 }
 
 const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [isDesktopMode, setIsDesktopMode] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(true);
 
   useEffect(() => {
     const checkDevice = () => {
-      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      const screenWidth = window.innerWidth;
-      const isDesktopBrowser = screenWidth > 800 && isMobileDevice;
+      // Check for mobile user agent
+      const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
+        navigator.userAgent
+      );
+      
+      // Check for screen characteristics
+      const smallScreen = window.screen.width <= 1024;
+      
+      // Check for touch capability
+      const isTouch = ('ontouchstart' in window) || 
+                     (navigator.maxTouchPoints > 0);
 
-      setIsMobile(isMobileDevice && screenWidth <= 500);
-      setIsDesktopMode(isDesktopBrowser);
+      // Check viewport size
+      const smallViewport = window.innerWidth <= 1024;
+
+      // Device pixel ratio is often higher on mobile
+      const highDPR = window.devicePixelRatio > 1;
+
+      // Combined check - if most of these are true, it's likely a mobile device
+      const isMobile = [
+        mobileUA,
+        smallScreen,
+        isTouch,
+        smallViewport,
+        highDPR
+      ].filter(Boolean).length >= 3;
+
+      setIsMobileDevice(isMobile);
     };
 
     checkDevice();
@@ -23,40 +44,26 @@ const MobileDetection: React.FC<MobileDetectionProps> = ({ children }) => {
     return () => window.removeEventListener('resize', checkDevice);
   }, []);
 
-  if (isDesktopMode) {
+  if (isMobileDevice) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-primary p-8 text-center">
-        <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-xl">
-          <h2 className="mb-4 text-2xl font-bold text-white">Nice Try! 😅</h2>
-          <p className="mb-4 text-lg text-white">
-            I see what you did there... switching to desktop mode, huh?
+      <div className="fixed inset-0 flex items-center justify-center bg-primary p-8">
+        <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-lg">
+          <h2 className="mb-4 text-2xl font-bold text-white">Desktop Only Zone! 🖥️</h2>
+          <p className="mb-3 text-lg text-white">
+            Nice try with desktop mode! 😉
             <br />
-            <span className="mt-2 inline-block">
-              🕵️‍♂️ Very sneaky... but I'm sneakier! 
-            </span>
+            But this experience needs a real desktop or laptop.
           </p>
-          <p className="text-base text-white opacity-90">
-            This site needs a real desktop or laptop screen.
-            <br />
-            No desktop mode tricks allowed! 🚫🎭
-          </p>
-          <div className="mt-4 text-sm text-white opacity-80">
-            P.S. The 3D models really want to meet your desktop screen!
+          <div className="mt-4 space-y-2 text-white opacity-90">
+            <p>Why? Because:</p>
+            <ul className="list-inside list-disc">
+              <li>3D models need more power 🚀</li>
+              <li>Your fingers deserve a break 🤚</li>
+              <li>It's more fun on a big screen! 🎮</li>
+            </ul>
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isMobile) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-primary p-8 text-center">
-        <div className="max-w-lg rounded-lg bg-[#915EFF] p-8 shadow-xl">
-          <h2 className="mb-4 text-2xl font-bold text-white">Desktop Viewing Recommended</h2>
-          <p className="text-lg text-white">
-            This site is optimized for desktop viewing to provide the best experience.
-            <br />
-            Please access the site from a desktop or laptop computer.
+          <p className="mt-6 text-sm text-white opacity-80">
+            See you on a desktop computer! 👋
           </p>
         </div>
       </div>
