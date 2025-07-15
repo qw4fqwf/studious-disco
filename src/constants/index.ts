@@ -183,7 +183,7 @@ const projects: TProject[] = [
     ],
     image: carrent,
     images: [carrent, jobit, tripguide],
-    sourceCodeLink: "https://drive.google.com/drive/u/0/folders/1U4sL3VHwpIJJikJYo3dYqn6_7cR5I8Md",
+    sourceCodeLink: "https://drive.google.com/drive/folders/1CY_o8TWGcINBsbcUOFQ0okBVCEyrdt92",
   },
   {
     name: "Research Paper: Heavy Metals in Water Sources",
@@ -205,7 +205,7 @@ const projects: TProject[] = [
     ],
     image: re1,
     images: [re1, re2, re3],
-    sourceCodeLink: "https://github.com/",
+    sourceCodeLink: "https://www.canva.com/design/DAGTvOQg_kQ/fpxH-iBYw8S6smKIat8zcw/view?utm_content=DAGTvOQg_kQ&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=UNAVAILABLE/",
   },
   {
     name: "Campus Connect – College Communication Prototype",
@@ -227,7 +227,7 @@ const projects: TProject[] = [
     ],
     image: cc1,
     images: [cc1, cc2, cc3, cc4],
-    sourceCodeLink: "https://github.com/",
+    sourceCodeLink: "https://www.canva.com/design/DAGT_6gw8Ww/tK5kB0GjQ6KOw_feaWnWfQ/edit/",
   },
   {
     name: "Presentation Design Gallery",
@@ -249,7 +249,7 @@ const projects: TProject[] = [
     ],
     image: pp1,
     images: [pp1, pp2, pp3, pp4],
-    sourceCodeLink: "https://github.com/",
+    sourceCodeLink: "https://keep.google.com/u/0/#NOTE/185H3dUx38s8UsSWyj0Dkxzuz0xehLCuFHoRxTFWoDkzkdmZCiE15T5FT-f8LB0U/",
   },
 ];
 
