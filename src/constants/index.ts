@@ -249,7 +249,7 @@ const projects: TProject[] = [
     ],
     image: pp1,
     images: [pp1, pp2, pp3, pp4],
-    sourceCodeLink: "https://keep.google.com/u/0/#NOTE/185H3dUx38s8UsSWyj0Dkxzuz0xehLCuFHoRxTFWoDkzkdmZCiE15T5FT-f8LB0U/",
+    sourceCodeLink: "https://docs.google.com/document/d/1-C_PaTK-U5vK_wHAG3Hei4et34w-RuxCTUkq6LY6ZI0/edit?usp=sharing",
   },
 ];
 
